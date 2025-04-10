@@ -37,26 +37,31 @@ Output 2 :
 */
 #include <stdio.h>
 
-int countSubsets(int arr[], int n, int K, int index) {
-    if (K == 0) return 1;
-    if (index == n || K < 0) return 0;
-    
+int countSubsets(int arr[], int n, int K, int index)
+{
+    if (K == 0)
+        return 1;
+    if (index == n || K < 0)
+        return 0;
+
     return countSubsets(arr, n, K - arr[index], index + 1) + countSubsets(arr, n, K, index + 1);
 }
 
-int main() {
+int main()
+{
     int n;
     scanf("%d", &n);
-    
+
     int arr[n];
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         scanf("%d", &arr[i]);
     }
-    
+
     int K;
     scanf("%d", &K);
-    
+
     printf("%d\n", countSubsets(arr, n, K, 0));
-    
+
     return 0;
 }

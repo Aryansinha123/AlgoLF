@@ -24,70 +24,88 @@
 # Sample test cases :
 # Input 1 :
 # Output 1 :
-#  .  .  Q  . 
-#  Q  .  .  . 
-#  .  .  .  Q 
+#  .  .  Q  .
+#  Q  .  .  .
+#  .  .  .  Q
 #  .  Q  .  . */
 #include <stdio.h>
 #include <stdbool.h>
 
 #define N 4
-
-void printBoard(char board[N][N]) {
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
+char board[N][N];
+void printBoard()
+{
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
             printf("%c ", board[i][j]);
         }
         printf("\n");
     }
 }
 
-bool isSafe(char board[N][N], int row, int col) {
-    for (int i = 0; i < row; i++) {
-        if (board[i][col] == 'Q') return false;
+bool isSafe( int row, int col)
+{
+    for (int i = 0; i < row; i++)
+    {
+        if (board[i][col] == 'Q')
+            return false;
     }
-    
-    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
-        if (board[i][j] == 'Q') return false;
+
+    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
+    {
+        if (board[i][j] == 'Q')
+            return false;
     }
-    
-    for (int i = row, j = col; i >= 0 && j < N; i--, j++) {
-        if (board[i][j] == 'Q') return false;
+
+    for (int i = row, j = col; i >= 0 && j < N; i--, j++)
+    {
+        if (board[i][j] == 'Q')
+            return false;
     }
-    
+
     return true;
 }
 
-bool solveNQueens(char board[N][N], int row, int solution[N]) {
-    if (row == N) {
-        printBoard(board);
+bool solveNQueens(int row, int solution[N])
+{
+    if (row == N)
+    {
+        printBoard();
         return true;
     }
-    
+
     int col = solution[row];
-    if (isSafe(board, row, col)) {
+    if (isSafe( row, col))
+    {
         board[row][col] = 'Q';
-        if (solveNQueens(board, row + 1, solution)) return true;
+        if (solveNQueens(row + 1, solution))
+            return true;
         board[row][col] = '.';
     }
-    
+
     return false;
 }
 
-void fourQueens() {
-    char board[N][N];
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
+void fourQueens()
+{
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
             board[i][j] = '.';
         }
     }
     int solution[N] = {2, 0, 3, 1}; // 3 1 4 2 (0-based indexing)
-    if (!solveNQueens(board, 0, solution)) {
+    if (!solveNQueens( 0, solution))
+    {
         printf("No solution exists\n");
     }
 }
 
-int main() {
+int main()
+{
     fourQueens();
     return 0;
 }
