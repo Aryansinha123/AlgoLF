@@ -51,7 +51,7 @@ Output 2 :
 import java.util.Scanner ;
 import java.util.Arrays ;
 
-class Main {
+public class Main1 {
     
     // Returns minimum number of barbers required
     static int numberOfBarbersRequired(int arr[], int dep[], int n)

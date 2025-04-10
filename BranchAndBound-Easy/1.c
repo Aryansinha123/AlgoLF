@@ -1,42 +1,21 @@
 /*Problem Statement
 
+You are a savvy thief preparing to rob a jewelry store. You have a knapsack with a limited capacity and a list of items, each with a certain weight and a corresponding profit.
 
-
-You are a savvy thief preparing to rob a jewelry store. You have a knapsack with a limited capacity and a list of items, each with a certain weight and a corresponding profit. 
-
-
-
-Your objective is to maximize the total profit you can obtain by selecting items to place in your knapsack while staying within its weight capacity. Write a program to help you calculate the maximum profit you can achieve. 
-
-
+Your objective is to maximize the total profit you can obtain by selecting items to place in your knapsack while staying within its weight capacity. Write a program to help you calculate the maximum profit you can achieve.
 
 Note: Use the 0/1 knapsack method to solve the program.
-
-
-
 Example
 
-
-
 Input:
-
 3
-
 60 10
-
 100 20
-
 120 30
-
 50
 
-
-
 Output:
-
 220
-
-
 
 Explanation:
 
@@ -51,8 +30,6 @@ The last line contains an integer C representing the weight capacity of your kna
 
 Output format :
 The output displays the maximum total profit that you can achieve by selecting items for your knapsack.
-
-
 
 Refer to the sample output for the formatting specifications
 
@@ -79,36 +56,35 @@ Input 2 :
 70
 Output 2 :
 20*/
-#include<stdio.h>
-int knapsack(int N,int W,int profits[],int weights[]){
-    int dp[N+1][W+1];
-    for(int i=0;i<=N;i++){
-        for(int w=0;w<=W;w++){
-            dp[i][w]=0;
-        }
-    }
-    for(int i=1;i<=N;i++){
-        for(int w=1;w<=W;w++){
-            if(weights[i-1]<=w){
-                dp[i][w]=(profits[i-1]+dp[i-1][w-weights[i-1]]>dp[i-1][w])?
-                (profits[i-1]+dp[i-1][w-weights[i-1]]):dp[i-1][w];
-            }else{
-                dp[i][w]=dp[i-1][w];
-            }
+#include <stdio.h>
+int knapsack(int N, int W, int profits[], int weights[])
+{
+    int dp[N + 1][W + 1];
+    for (int i = 0; i <= N; i++)
+    {
+        for (int j = 0; j <= W; j++)
+        {
+            if (i == 0 || j == 0)
+                dp[i][j] = 0;
+            else if (weights[i - 1] <= j)
+                dp[i][j] = (profits[i - 1] + dp[i - 1][j - weights[i - 1]] > dp[i - 1][j]) ? profits[i - 1] + dp[i - 1][j - weights[i - 1]] : dp[i - 1][j];
+            else
+                dp[i][j] = dp[i - 1][j];
         }
     }
     return dp[N][W];
-    
 }
-int main(){
-    int N,W;
-    scanf("%d",&N);
-    int profits[N],weights[N];
-    for(int i=0;i<N;i++){
-        scanf("%d %d",&profits[i],&weights[i]);
+int main()
+{
+    int N, W;
+    scanf("%d", &N);
+    int profits[N], weights[N];
+    for (int i = 0; i < N; i++)
+    {
+        scanf("%d %d", &profits[i], &weights[i]);
     }
-    scanf("%d",&W);
-    int maxProfit=knapsack(N,W,profits,weights);
-    printf("%d\n",maxProfit);
+    scanf("%d", &W);
+    int maxProfit = knapsack(N, W, profits, weights);
+    printf("%d\n", maxProfit);
     return 0;
 }

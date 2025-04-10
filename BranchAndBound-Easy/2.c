@@ -1,23 +1,14 @@
 /*Problem Statement
 
-
-
-Ragul is interested in solving the knapsack problem. He has a list of n items, each with a weight and a value. 
-
-
+Ragul is interested in solving the knapsack problem. He has a list of n items, each with a weight and a value.
 
 Ragul wants to determine the maximum value he can obtain by selecting a combination of items to fit into his knapsack, which has a maximum weight capacity.
 
-
-
 Help Ragul write a program that calculates the following:
-
-
 
 Calculate and print the sum of all n values.
 Calculate and print the average value of all n values with exactly 2 decimal places.
 Calculate and print the maximum value that can be obtained by selecting a combination of items to fit into the knapsack without exceeding its capacity.
-
 
 Note: Use the 0/1 knapsack method to solve the problem.
 
@@ -68,46 +59,58 @@ Output 2 :
 Sum of values: 45
 Average of values: 11.25
 Maximum amount: 30*/
-#include<stdio.h>
-int max(int a,int b){
-    return (a>b)?a:b;
+#include <stdio.h>
+int max(int a, int b)
+{
+    return (a > b) ? a : b;
 }
-int knapsack(int C,int weights[],int values[],int n){
-    int dp[n+1][C+1];
-    for(int i=0;i<=n;i++){
-        for(int w=0;w<=C;w++){
-            if(i==0 || w==0){
-                dp[i][w]=0;
-            }else if(weights[i-1]<=w){
-                dp[i][w]=max(values[i-1]+dp[i-1] [w-weights[i-1]],dp[i-1][w]);
-            }else{
-                dp[i][w]=dp[i-1][w];
+int knapsack(int C, int weights[], int values[], int n)
+{
+    int dp[n + 1][C + 1];
+    for (int i = 0; i <= n; i++)
+    {
+        for (int w = 0; w <= C; w++)
+        {
+            if (i == 0 || w == 0)
+            {
+                dp[i][w] = 0;
             }
+            else if (weights[i - 1] <= w)
+            {
+                dp[i][w] = max(values[i - 1] + dp[i - 1][w - weights[i - 1]], dp[i - 1][w]);
+            }
+            else
+            {
+                dp[i][w] = dp[i - 1][w];
             }
         }
-        return dp[n][C];
     }
-int main(){
+    return dp[n][C];
+}
+int main()
+{
     int n;
-    scanf("%d",&n);
-    int weights[n],values[n];
-    for(int i=0;i<n;i++){
-        scanf("%d",&weights[i]);
+    scanf("%d", &n);
+    int weights[n], values[n];
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &weights[i]);
     }
-    for(int i=0;i<n;i++){
-        scanf("%d",&values[i]);
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &values[i]);
     }
     int C;
-    scanf("%d",&C);
-    int sumValues=0;
-    for(int i=0;i<n;i++){
-        sumValues+=values[i];
+    scanf("%d", &C);
+    int sumValues = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sumValues += values[i];
     }
-    double avgValue=(double)sumValues/n;
-    int maxValue=knapsack(C,weights,values,n);
-    printf("Sum of values: %d\n",sumValues);
-    printf("Average of values: %.2f\n",avgValue);
-    printf("Maximum amount:%d\n",maxValue);
+    double avgValue = (double)sumValues / n;
+    int maxValue = knapsack(C, weights, values, n);
+    printf("Sum of values: %d\n", sumValues);
+    printf("Average of values: %.2f\n", avgValue);
+    printf("Maximum amount:%d\n", maxValue);
     return 0;
-    
-}    
+}
